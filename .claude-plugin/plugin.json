@@ -5,5 +5,8 @@
   "author": {
     "name": "Chris Ye"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "skills": [
+    "./skills/docs/commit-message"
+  ]
 }

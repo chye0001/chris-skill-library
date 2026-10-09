@@ -1,0 +1,9 @@
+{
+  "name": "sdlc",
+  "version": "0.1.0",
+  "description": "Skills for planning, building, reviewing, and shipping software",
+  "author": {
+    "name": "Chris Ye"
+  },
+  "license": "MIT"
+}

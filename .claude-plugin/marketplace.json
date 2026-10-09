@@ -1,0 +1,16 @@
+{
+  "name": "chris-skill-library",
+  "owner": {
+    "name": "Chris Ye"
+  },
+  "description": "Personal skill library for the software development lifecycle",
+  "plugins": [
+    {
+      "name": "sdlc",
+      "source": "./",
+      "description": "Skills for planning, building, reviewing, and shipping software",
+      "category": "development",
+      "keywords": ["sdlc", "workflow", "skills"]
+    }
+  ]
+}

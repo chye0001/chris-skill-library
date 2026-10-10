@@ -8,6 +8,7 @@
   "license": "MIT",
   "skills": [
     "./skills/docs/commit-message",
-    "./skills/docs/code-as-documentation"
+    "./skills/docs/code-as-documentation",
+    "./skills/setup/setup-testing"
   ]
 }

@@ -23,13 +23,24 @@ To try it from a local clone instead:
 |---|---|---|
 | `code-as-documentation` | Writing or editing code | No explanatory comments and no notes in memory files. A comment is allowed only when the reason lives outside the code: third-party behavior, an incident, a legal requirement, or a measured value. |
 | `commit-message` | Committing | Conventional Commits header (`type(scope): subject`, max 72 characters) and a required body that says why. Asks for the reason instead of inventing one. |
+| `test-first` | Implementing a feature, fixing a bug, or changing behavior | Designs test cases from the spec (equivalence partitions, boundary values, decision tables, state transitions), writes failing tests, implements, then closes coverage gaps. Every bug fix gets a regression test. |
 | `meaningful-tests` | Writing or reviewing tests | Catches tautological tests, lints the tests, and proves each new test fails when the code it protects is broken. |
-| `e2e-verification` | Verifying a feature end to end | Verifies a feature in a real browser, then turns it into a Playwright test that runs on Chromium, Firefox, and WebKit. |
-| `setup-testing` | Only when you run `/sdlc:setup-testing` | Sets up Vitest, Playwright, ESLint with test-quality rules, and commitlint with a `commit-msg` hook. |
+| `e2e-verification` | Verifying a feature end to end | Verifies a feature in a real browser, then turns it into an E2E test in the project's framework (Playwright by default) that runs on Chromium, Firefox, and WebKit. |
+| `setup-testing` | Only when you run `/sdlc:setup-testing` | Sets up Vitest with coverage, Playwright, ESLint with test-quality rules, commitlint with a `commit-msg` hook, and Claude Code deny rules for `.env` files. Keeps an existing test setup unless asked to migrate. |
 
 ## Setting up a project
 
-`setup-testing` needs Node 22.12 or newer. It never overwrites existing configs; anything it can't set up safely is listed under "Needs attention".
+The library's stack for JavaScript and TypeScript projects:
+
+- **Vitest** with V8 coverage for unit and integration tests
+- **Playwright** for E2E tests on Chromium, Firefox, and WebKit
+- **ESLint** with test-quality rules
+- **commitlint** with a `commit-msg` hook
+- **Claude Code deny rules** in `.claude/settings.json` that block reading `.env` files with real values (`.env.test` and `.env.example` stay readable)
+
+A project's existing test setup is respected. If it already uses another framework, such as Jest or Cypress, that framework is kept and only gets its ESLint rules. To move it to Vitest and Playwright, ask for a migration, or pass `--migrate` to the script.
+
+The script needs Node 22.12 or newer. It never overwrites existing configs; anything it can't set up safely is listed under "Needs attention".
 
 In Claude Code, run:
 
@@ -46,8 +57,9 @@ node path/to/chris-skill-library/skills/setup/setup-testing/scripts/setup-testin
 | Option | Effect |
 |---|---|
 | `--dry-run` | Show what would change, without changing anything |
+| `--migrate` | Install Vitest and Playwright even when the project uses another framework, so its tests can be ported |
 | `--browsers` | Also download the Playwright browsers (several hundred MB) |
-| `--print <template>` | Print a config template for merging by hand: `eslint`, `vitest`, `playwright`, `commitlint`, or `commit-msg` |
+| `--print <template>` | Print a config template for merging by hand: `eslint`, `vitest`, `playwright`, `commitlint`, `commit-msg`, or `claude-settings` |
 
 ## Adding a skill
 

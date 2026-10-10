@@ -11,6 +11,7 @@
     "./skills/docs/code-as-documentation",
     "./skills/verifications/e2e-verification",
     "./skills/verifications/meaningful-tests",
+    "./skills/verifications/test-first",
     "./skills/setup/setup-testing"
   ]
 }

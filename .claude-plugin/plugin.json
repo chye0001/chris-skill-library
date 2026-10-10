@@ -9,6 +9,7 @@
   "skills": [
     "./skills/docs/commit-message",
     "./skills/docs/code-as-documentation",
+    "./skills/verifications/e2e-verification",
     "./skills/verifications/meaningful-tests",
     "./skills/setup/setup-testing"
   ]

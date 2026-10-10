@@ -36,13 +36,15 @@ Run the project's linter on the test files you wrote or are reviewing, for examp
 - Fix every error.
 - Each warning (weak matchers, snapshot baselines, raw CSS or XPath locators, skipped tests) needs a judgment call. Fix it, or say in your report why it's fine.
 
-If the project's ESLint config has no test rules (`eslint-plugin-playwright`, `@vitest/eslint-plugin`, or `eslint-plugin-jest`), say so in your report and suggest the `/sdlc:setup-testing` command. Don't install anything without asking.
+If the ESLint config has no rules for the project's test framework (`@vitest/eslint-plugin`, `eslint-plugin-jest`, `eslint-plugin-playwright`, or `eslint-plugin-cypress`), say so in your report and suggest the `/sdlc:setup-testing` command. Don't install anything without asking.
 
 Linters can't detect mirroring the implementation, over-mocking, or asserting on setup. Read each test for those yourself.
 
 ## Prove a test can fail
 
-Before accepting any new test, show it going red for the right reason. Use the script, which breaks the code with one exact text replacement, runs the test, and restores the file byte for byte:
+Before accepting any new test, show it going red for the right reason. When following the `test-first` skill, the Red phase already does this, because each test fails before the code exists. Use this script for tests written after the code, and when reviewing existing tests.
+
+The script breaks the code with one exact text replacement, runs the test, and restores the file byte for byte:
 
 ```bash
 node "${CLAUDE_SKILL_DIR}/scripts/prove-test-fails.mjs" \
@@ -57,6 +59,7 @@ node "${CLAUDE_SKILL_DIR}/scripts/prove-test-fails.mjs" \
 - `--expect` is text that must appear in the failing output, such as the assertion matcher or the expected value. Use it so a failure from something else doesn't count.
 - The script first runs the test on the unbroken code, and stops if it doesn't pass.
 - It exits with 0 only when the test passed before the break, failed after it, matched `--expect`, and the file was restored.
+- The test command can be any runner the project uses, such as `npx vitest run src/cart`, `npx jest cart`, or `npx cypress run --spec cypress/e2e/cart.cy.ts`.
 
 Choose a break that removes the behavior the test is meant to protect: revert the fix, or change the one line that produces the outcome. The failure must come from the assertion that expresses the behavior. A timeout, a missing selector, or a crash during setup doesn't count, because that only proves the test is broken in a different way.
 

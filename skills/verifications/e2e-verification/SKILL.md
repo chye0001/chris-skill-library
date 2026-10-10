@@ -1,6 +1,6 @@
 ---
 name: e2e-verification
-description: Verify a web feature or bug fix end to end in a real browser, then turn that verification into a Playwright E2E regression test that can actually fail. Use when the user asks to verify a UI feature or bug fix end to end, to write or review E2E or Playwright tests, to run tests across Chromium, Firefox, and WebKit, or to profile a page with CDP or the Chrome DevTools MCP. Not for unit tests or small styling changes.
+description: Verify a web feature or bug fix end to end in a real browser, then turn that verification into an E2E regression test that can actually fail, using the project's E2E framework or Playwright by default. Use when the user asks to verify a UI feature or bug fix end to end, to write or review E2E, Playwright, or Cypress tests, to run tests across Chromium, Firefox, and WebKit, or to profile a page with CDP or the Chrome DevTools MCP. Not for unit tests or small styling changes.
 ---
 
 # E2E verification
@@ -12,7 +12,7 @@ Goal: confirm a feature really works in a browser, then leave behind a regressio
 Check `package.json` and the config files in the project root to see which E2E framework is set up.
 
 - **Playwright is set up:** use it.
-- **Another framework is set up** (Cypress, WebdriverIO, and so on): use that one. The rules below about locators, waiting, and test independence still apply, translated to that framework.
+- **Another framework is set up** (Cypress, WebdriverIO, and so on): use that one, and don't switch to Playwright unless the user asks to migrate. The rules below about locators, waiting, and test independence still apply, translated to that framework. For example, in Cypress use Testing Library's `cy.findByRole` or `data-*` selectors, and never `cy.wait(<milliseconds>)`.
 - **Nothing is set up:** suggest the `/sdlc:setup-testing` command to the user. Don't install anything without asking.
 
 ## The loop
@@ -21,7 +21,7 @@ Check `package.json` and the config files in the project root to see which E2E f
 2. **Explore and verify on Chromium only.** Drive the app, observe, and debug (see "Exploring the app"). Running three browsers while iterating slows the loop for no gain.
 3. **Write the verified behavior as a test** (see "Writing the test").
 4. **Prove the test can fail.** Load the `meaningful-tests` skill and follow it: lint the test, then run its `prove-test-fails.mjs` script. Don't skip this step.
-5. **Run across Chromium, Firefox, and WebKit.** Read [references/cross-browser.md](references/cross-browser.md) for the config, the commands, and how to read the results.
+5. **Run across Chromium, Firefox, and WebKit.** Read [references/cross-browser.md](references/cross-browser.md) for the config, the commands, and how to read the results. With another framework, run every browser it supports and report the ones it can't cover.
 6. **Report** in the format at the end of this skill.
 
 ## Exploring the app

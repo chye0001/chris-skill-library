@@ -27,6 +27,7 @@ To try it from a local clone instead:
 | `meaningful-tests` | Writing or reviewing tests | Catches tautological tests, lints the tests, and proves each new test fails when the code it protects is broken. |
 | `e2e-verification` | Verifying a feature end to end | Verifies a feature in a real browser, then turns it into an E2E test in the project's framework (Playwright by default) that runs on Chromium, Firefox, and WebKit. |
 | `setup-testing` | Only when you run `/sdlc:setup-testing` | Sets up Vitest with coverage, Playwright, ESLint with test-quality rules, commitlint with a `commit-msg` hook, and Claude Code deny rules for `.env` files. Keeps an existing test setup unless asked to migrate. |
+| `package-structure` | Creating an API project, adding a domain or endpoint, or moving, naming, or reviewing files in one | Puts each domain in a feature folder under `src/` with its interfaces, types, repository, service, and controller. Classes depend on interfaces, and `src/server.ts` is the only file that creates them. Keeps `database/` for the connection and `postman/` for collections. |
 
 ## Setting up a project
 
